@@ -9,8 +9,8 @@ module.exports.signUpErrors = (err) => { //erreurs d'enregistrement
     if (err.message.includes('password')) //le mdp est trop court
         errors.password = "Le mot de passe doit faire plus de 6 caractères minimum";
     
-    if (err.code === 11000 && Object.keys(err.keyValue)[0].includes('pseudo')) //email déjà enregistré
-        errors.email = "Ce pseudo est déjà pris";
+    if (err.code === 11000 && Object.keys(err.keyValue)[0].includes('pseudo')) //pseudo déjà enregistré
+        errors.pseudo = "Ce pseudo est déjà pris";
     
     if (err.code === 11000 && Object.keys(err.keyValue)[0].includes('email')) //email déjà enregistré
         errors.email = "L'email est déjà enregistré";
