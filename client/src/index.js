@@ -1,17 +1,27 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import "./styles/index.scss";
+import { Provider } from "react-redux";
+import { applyMiddleware, createStore } from "redux";
+import thunk from "redux-thunk"; //IMPORTANT , sorte de middleware permettant d'exécuter des req async avec Redux
+import rootReducer from "./reducers"; //va aller chercher 'combineReducers' dans le fichier 'index.js' du dossier 'reducers'
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+//dev tools (utiliser l'un des deux suffit)
+import { composeWithDevTools } from "redux-devtools-extension";
+import logger from "redux-logger";
+
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk, logger))
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+ReactDOM.render(
+  <Provider store={store}>
+    {" "}
+    {/*store de Redux*/}
+    <App />
+  </Provider>,
+
+  document.getElementById("root")
+);

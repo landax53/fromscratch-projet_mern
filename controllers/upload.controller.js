@@ -6,11 +6,11 @@ const { uploadErrors } = require("../utils/errors.utils");
 
 module.exports.uploadProfil = async (req, res) => {
     try {
-        if (req.file.detectedMimeType !== "image/jpg" && 
-            req.file.detectedMimeType !== "image/jpeg" && 
-            req.file.detectedMimeType !== "image/png"
+        if (req.file.detectedMimeType != "image/jpg" && 
+            req.file.detectedMimeType != "image/jpeg" && 
+            req.file.detectedMimeType != "image/png"
         )
-        throw Error("invalid format");
+        throw Error("invalid file");
     
         if(req.file.size > 500000) throw Error("max size");
     } catch (err) {
@@ -31,7 +31,7 @@ module.exports.uploadProfil = async (req, res) => {
     try { // création du chemin dans MongoDB
         await UserModel.findByIdAndUpdate(
             req.body.userId,
-            { $set: {picture: "./upload/profil/" + fileName}},
+            { $set: {picture: "./uploads/profil/" + fileName}},
             { new : true , upsert: true, setDefaultsOnInsert: true },
             (err,docs) => {
                 if (!err) return res.send(docs);
