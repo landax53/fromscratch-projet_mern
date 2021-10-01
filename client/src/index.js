@@ -10,11 +10,16 @@ import rootReducer from "./reducers"; //va aller chercher 'combineReducers' dans
 //dev tools (utiliser l'un des deux suffit)
 import { composeWithDevTools } from "redux-devtools-extension";
 import logger from "redux-logger";
+import { getUsers } from "./actions/users.actions";
+import { getPosts } from "./actions/post.actions";
 
 const store = createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(thunk, logger))
 );
+
+store.dispatch(getUsers());
+store.dispatch(getPosts());
 
 ReactDOM.render(
   <Provider store={store}>

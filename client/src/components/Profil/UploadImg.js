@@ -13,9 +13,9 @@ const UploadImg = () => {
     data.append("name", userData.pseudo); //on attache à data : clé sera "name" et le nom de l'image sera le pseudo de l'utilisateur
     data.append("userId", userData._id); //on attache à data : clé sera l'id de l'utilisateur et l'élément sera l'id
     data.append("file", file); //on attache à data : la clé: "file" et le file en question
-    
-    dispatch(uploadPicture(data, userData._id)) //on déclenche l'action uploadPicture avec toute la data, et userid en paramètre qui sera nécessaire dans l'action
-};
+
+    dispatch(uploadPicture(data, userData._id)); //on déclenche l'action uploadPicture avec toute la data, et userid en paramètre qui sera nécessaire dans l'action
+  };
 
   return (
     <form action="" onSubmit={handlePicture} className="upload-pic">
@@ -25,7 +25,7 @@ const UploadImg = () => {
         id="file"
         name="file"
         accept=".jpg, .jpeg, .png"
-        onChange={(e) => setFile(e.target.files[0])}
+        onChange={(e) => setFile(e.target.files[0])} //on met dans une variable 'file' l'élément mit dans l'input
       />
       <br />
       <input type="submit" value="Envoyer" />
