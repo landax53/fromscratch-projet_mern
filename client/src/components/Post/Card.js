@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updatePost } from "../../actions/post.actions";
-import FollowHandler from "../Profil/FollowHandler";
 import { dateParser, isEmpty } from "../Utils";
-import CardComments from "./CardComments";
-import DeleteCard from "./DeleteCard";
+import FollowHandler from "../Profil/FollowHandler";
 import LikeButton from "./LikeButton";
+import { updatePost } from "../../actions/post.actions";
+import DeleteCard from "./DeleteCard";
+import CardComments from "./CardComments";
 
 const Card = ({ post }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -24,7 +24,6 @@ const Card = ({ post }) => {
   };
 
   useEffect(() => {
-    //on passe setIsLoading sur 'false' quand on a chargé la data. Donc au premier chargement on l'a pas 'isEmpty' est true, mais comme on a le callback [usersData] qui va relancer useEffect, on a 'isEmpty' false, donc on passe setIsLoading sur 'false', le chargement de la page est terminé
     !isEmpty(usersData[0]) && setIsLoading(false);
   }, [usersData]);
 
@@ -53,10 +52,12 @@ const Card = ({ post }) => {
               <div className="pseudo">
                 <h3>
                   {!isEmpty(usersData[0]) &&
-                    usersData.map((user) => {
-                      if (user._id === post.posterId) return user.pseudo;
-                      else return null;
-                    })}
+                    usersData
+                      .map((user) => {
+                        if (user._id === post.posterId) return user.pseudo;
+                        else return null;
+                      })
+                      .join("")}
                 </h3>
                 {post.posterId !== userData._id && (
                   <FollowHandler idToFollow={post.posterId} type={"card"} />

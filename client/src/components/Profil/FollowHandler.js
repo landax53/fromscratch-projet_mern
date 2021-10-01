@@ -14,18 +14,17 @@ const FollowHandler = ({ idToFollow, type }) => {
   };
 
   const handleUnfollow = () => {
-    dispatch(unfollowUser(userData._id, idToFollow)); //on doit laisser idToFollow
+    dispatch(unfollowUser(userData._id, idToFollow));
     setIsFollowed(false);
   };
 
   useEffect(() => {
     if (!isEmpty(userData.following)) {
       if (userData.following.includes(idToFollow)) {
-        //si on suit déjà un utilisateur, alors on va passer sur true
         setIsFollowed(true);
       } else setIsFollowed(false);
     }
-  }, [userData, idToFollow]); //quand le userData évolue, ça relance le useEffect
+  }, [userData, idToFollow]);
 
   return (
     <>

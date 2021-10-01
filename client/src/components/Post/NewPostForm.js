@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { isEmpty, timestampParser } from "../Utils";
 import { NavLink } from "react-router-dom";
 import { addPost, getPosts } from "../../actions/post.actions";
-import { isEmpty, timestampParser } from "../Utils";
 
 const NewPostForm = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [message, setMessage] = useState("");
-  const [postPicture, setPostPicture] = useState(null); //image que l'on afiichera en front
+  const [postPicture, setPostPicture] = useState(null);
   const [video, setVideo] = useState("");
-  const [file, setFile] = useState(); // image, vidéo que l'on stockera
+  const [file, setFile] = useState();
   const userData = useSelector((state) => state.userReducer);
   const error = useSelector((state) => state.errorReducer.postError);
   const dispatch = useDispatch();
@@ -45,6 +45,7 @@ const NewPostForm = () => {
 
   useEffect(() => {
     if (!isEmpty(userData)) setIsLoading(false);
+
     const handleVideo = () => {
       let findLink = message.split(" ");
       for (let i = 0; i < findLink.length; i++) {
@@ -54,8 +55,8 @@ const NewPostForm = () => {
         ) {
           let embed = findLink[i].replace("watch?v=", "embed/");
           setVideo(embed.split("&")[0]);
-          findLink.splice(i, 1); //on enlève le texte du lien de la vidéo dans le message
-          setMessage(findLink.join(" ")); // on reformate le text du message qu'on avait splité
+          findLink.splice(i, 1);
+          setMessage(findLink.join(" "));
           setPostPicture("");
         }
       }
@@ -122,7 +123,6 @@ const NewPostForm = () => {
                 </div>
               </li>
             ) : null}
-
             <div className="footer-form">
               <div className="icon">
                 {isEmpty(video) && (
@@ -132,17 +132,17 @@ const NewPostForm = () => {
                       type="file"
                       id="file-upload"
                       name="file"
-                      accept=".jpg, .jpeg,.png"
+                      accept=".jpg, .jpeg, .png"
                       onChange={(e) => handlePicture(e)}
                     />
                   </>
                 )}
                 {video && (
-                  <button onClick={() => setVideo("")}>Supprimer vidéo</button>
+                  <button onClick={() => setVideo("")}>Supprimer video</button>
                 )}
               </div>
-              {!isEmpty(error.format) && <p>{error.format} </p>}
-              {!isEmpty(error.maxSize) && <p>{error.maxSize} </p>}
+              {!isEmpty(error.format) && <p>{error.format}</p>}
+              {!isEmpty(error.maxSize) && <p>{error.maxSize}</p>}
               <div className="btn-send">
                 {message || postPicture || video.length > 20 ? (
                   <button className="cancel" onClick={cancelPost}>
